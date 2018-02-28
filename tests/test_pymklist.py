@@ -12,6 +12,7 @@ from pymklist import cli
 import mock
 
 from pymklist.download_data import LDRAW_URL
+from pymklist.generate_parts_lst import generate_parts_lst
 
 
 @pytest.fixture
@@ -46,9 +47,20 @@ def test_cli_not_valid_ldraw(cwd_mock, exists_mock, runner):
     assert 'make-list' in result.output
 
 
-def test_cli_in_valid_ldraw_dir(cwd_mock, exists_mock, runner):
+def glob_side_effect(*args, **kwargs):
+    return []
+
+
+@mock.patch('glob.glob', side_effect=glob_side_effect)
+def test_cli_in_valid_ldraw_dir(glob_mock, cwd_mock, exists_mock, runner):
     cwd_mock.side_effect = lambda: 'ldraw'
-    exists_mock.side_effect = lambda s: True
+
+    def exists_mock_side_effect(s):
+        if s == 'parts.lst':
+            return False
+        return True
+
+    exists_mock.side_effect = exists_mock_side_effect
 
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
@@ -64,7 +76,7 @@ def test_cli_in_ldraw_dir_without_parts_dir_no(input_mock, cwd_mock, exists_mock
 
 
 def mocked_retrieve(*args, **kwargs):
-    return os.path.join('tests','test_data','complete.zip'), ''
+    return os.path.join('tests', 'test_data', 'complete.zip'), ''
 
 
 @mock.patch('pymklist.download_data.urlretrieve')
@@ -95,4 +107,24 @@ def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock, retrieve_mock, input_m
 def test_cli_has_help(runner):
     help_result = runner.invoke(cli.main, ['--help'])
     assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+    assert '--help' in help_result.output
+    assert 'Show this message and exit' in help_result.output
+
+
+def test_cli_valid_ldraw_dir_test_data(exists_mock):
+    def exists_mock_side_effect(s):
+        if s == 'parts.lst':
+            return False
+        return True
+
+    exists_mock.side_effect = exists_mock_side_effect
+
+    input_dir = os.path.join('tests', 'test_data', 'ldraw')
+
+    for mode in ['description', 'number']:
+        generate_parts_lst(input_dir, mode)
+
+        content = open(os.path.join(input_dir, 'parts.lst')).read()
+        expected = open(os.path.join(input_dir, 'parts.%s.lst' % mode)).read()
+
+        assert expected == content
