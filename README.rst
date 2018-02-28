@@ -17,7 +17,6 @@ LDraw mklist in Python
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://pymklist.readthedocs.io.
 
 
 Features
