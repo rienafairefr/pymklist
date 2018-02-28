@@ -7,12 +7,12 @@ import pytest
 
 from click.testing import CliRunner
 
-from pymklist import cli
+from mklist import cli
 
 import mock
 
-from pymklist.download_data import LDRAW_URL
-from pymklist.generate_parts_lst import generate_parts_lst
+from mklist.download_data import LDRAW_URL
+from mklist.generate_parts_lst import generate_parts_lst
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ def exists_mock():
 
 @pytest.fixture
 def input_mock():
-    with mock.patch('pymklist.cli.six_input') as ctx:
+    with mock.patch('mklist.cli.six_input') as ctx:
         yield ctx
 
 
@@ -79,7 +79,7 @@ def mocked_retrieve(*args, **kwargs):
     return os.path.join('tests', 'test_data', 'complete.zip'), ''
 
 
-@mock.patch('pymklist.download_data.urlretrieve')
+@mock.patch('mklist.download_data.urlretrieve')
 @mock.patch('zipfile.ZipFile.extractall')
 def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock, retrieve_mock, input_mock, cwd_mock, exists_mock, runner):
     cwd_mock.side_effect = lambda: 'ldraw'

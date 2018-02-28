@@ -37,7 +37,7 @@ setup(
     description="LDraw mklist in Python",
     entry_points={
         'console_scripts': [
-            'make-list=pymklist.cli:main',
+            'make-list=mklist.cli:main',
         ],
     },
     install_requires=requirements,
@@ -46,7 +46,7 @@ setup(
     include_package_data=True,
     keywords='pymklist',
     name='pymklist',
-    packages=find_packages(include=['pymklist']),
+    packages=find_packages(include=['mklist']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,

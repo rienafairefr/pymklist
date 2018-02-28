@@ -9,8 +9,8 @@ import re
 
 from six.moves import input as six_input
 
-from pymklist.download_data import dowload_data
-from pymklist.generate_parts_lst import generate_parts_lst
+from mklist.download_data import dowload_data
+from mklist.generate_parts_lst import generate_parts_lst
 
 ldraw = re.compile(r'ldraw', flags=re.IGNORECASE)
 yes = re.compile(r'[y](?:es)?', flags=re.IGNORECASE)

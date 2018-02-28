@@ -5,7 +5,7 @@ import shutil
 import re
 import string
 
-from pymklist.utils import preserve_cwd
+from mklist.utils import preserve_cwd
 
 
 @preserve_cwd
