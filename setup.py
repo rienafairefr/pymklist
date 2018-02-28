@@ -15,7 +15,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=6.0', ]
 
-setup_requirements = ['pytest-runner', ]
+setup_requirements = ['pytest-runner', 'six']
 
 test_requirements = ['pytest', ]
 
@@ -37,7 +37,7 @@ setup(
     description="LDraw mklist in Python",
     entry_points={
         'console_scripts': [
-            'pymklist=pymklist.cli:main',
+            'make-list=pymklist.cli:main',
         ],
     },
     install_requires=requirements,

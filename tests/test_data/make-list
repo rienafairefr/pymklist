@@ -117,6 +117,7 @@ then
 
 	directory="$browse/parts"
 else
+    # basename matches ldraw
 	echo "${yellow}LDraw parts directory not found or not setup on this system.${reset}"
 	echo "${yellow}Would you like to have the latest LDraw parts library downloaded and setup on your system?${reset}"
 
