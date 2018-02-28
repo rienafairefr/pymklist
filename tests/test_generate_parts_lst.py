@@ -18,7 +18,7 @@ def test_generate_test_data(mode):
                        )
     expected_parts_file = os.path.join('tests', 'test_data', 'parts.%s.lst' % mode)
 
-    comparison = filecmp.cmp(parts_file, expected_parts_file)
+    comparison = filecmp.cmp(parts_file, expected_parts_file, shallow=False)
 
     if not comparison:
         content = open(parts_file).readlines()
