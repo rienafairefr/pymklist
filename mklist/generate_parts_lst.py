@@ -14,12 +14,8 @@ def line_format(**kwargs):
 
 
 def do_sort(li, mode):
-    if mode=='description':
-        def cmpkey1(row):
-            return alphanum.sub('', row[mode]).lower()
-    else:
-        def cmpkey1(row):
-            return num.sub('', row[mode]).lower()
+    def cmpkey1(row):
+        return alphanum.sub('', row[mode]).lower()
 
     def cmpkey2(row):
         return line_format(**row)
@@ -61,11 +57,7 @@ def get_parts_lst(parts_dir, mode):
     return parts_lst
 
 
-def generate_parts_lst(input_directory, mode, parts_folder_path='parts', parts_lst_path=None):
-    if parts_lst_path is None:
-        parts_lst_path = os.path.join(input_directory, 'parts.lst')
-    if parts_folder_path is None:
-        parts_folder_path = os.path.join(input_directory, 'parts')
+def generate_parts_lst(mode, parts_folder_path, parts_lst_path):
     if os.path.exists(parts_lst_path):
         shutil.move(parts_lst_path, parts_lst_path+'.old')
 

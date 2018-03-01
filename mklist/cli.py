@@ -39,10 +39,12 @@ def main(input_directory, description, number, ):
                 print('Can\'t continue without a LDraw parts directory')
                 raise click.Abort()
 
+    parts_lst_path = os.path.join(input_directory, 'parts.lst')
+    parts_folder_path = os.path.join(input_directory, 'parts')
     if description:
-        generate_parts_lst(input_directory, 'description')
+        generate_parts_lst('description', parts_folder_path, parts_lst_path)
     else:
-        generate_parts_lst(input_directory, 'number')
+        generate_parts_lst('number', parts_folder_path, parts_lst_path)
 
 
 if __name__ == "__main__":
