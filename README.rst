@@ -15,11 +15,12 @@ pymklist
 
 LDraw mklist in Python
 
-Once installed with `pip install pymklist`, it should be a drop-in replacement for the make-list bash file found in
+Once installed with `pip install pymklist`, it should be an almost drop-in replacement for the make-list bash file found in
 `https://github.com/nathaneltitane/ldraw` or the Windows executable mklist.exe found in LDraw.org complete.zip
-you can just start it by doing `mklist` on the command-line.
+you can start it by just doing `mklist` on the command-line.
 
-You can instruct mklist to generate the parts.lst with a sort on the description (`--description`) or the code (`--number`)
+You can instruct mklist to generate the parts.lst with a sort on the description (`--description`) or the code (`--number`),
+use `mklist --help` for usage description
 
 pymklist has been tested on Python 2.7, 3.4, 3.5 and 3.6
 
