@@ -3,6 +3,8 @@
 
 """Tests for `pymklist` package."""
 import os
+import zipfile
+
 import pytest
 
 from click.testing import CliRunner
@@ -11,8 +13,7 @@ from mklist import cli
 
 import mock
 
-from mklist.download_data import LDRAW_URL
-from mklist.generate_parts_lst import generate_parts_lst
+from mklist.download import LDRAW_URL
 
 
 @pytest.fixture
@@ -44,7 +45,7 @@ def test_cli_not_valid_ldraw(cwd_mock, exists_mock, runner):
 
     result = runner.invoke(cli.main)
     assert result.exit_code == 1
-    assert 'make-list' in result.output
+    assert 'mklist' in result.output
 
 
 def glob_side_effect(*args, **kwargs):
@@ -83,8 +84,8 @@ def mocked_retrieve(*args, **kwargs):
 
 
 @mock.patch('mklist.cli.generate_parts_lst')
-@mock.patch('mklist.download_data.urlretrieve')
-@mock.patch('zipfile.ZipFile.extractall')
+@mock.patch('mklist.download.urlretrieve')
+@mock.patch('zipfile.ZipFile', spec=zipfile.ZipFile)
 def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock, retrieve_mock, generate_parts_lst_mock,
                                                 input_mock, cwd_mock, exists_mock, runner):
     cwd_mock.side_effect = lambda: 'ldraw'
@@ -106,7 +107,6 @@ def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock, retrieve_mock, generat
     assert retrieve_mock.call_args[0][0] == LDRAW_URL
 
     assert zip_mock.called
-    zip_mock.assert_called_with('ldraw')
 
 
 def test_cli_has_help(runner):

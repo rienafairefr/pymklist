@@ -6,7 +6,7 @@ import pytest
 import filecmp
 import difflib
 
-from mklist.generate_parts_lst import generate_parts_lst
+from mklist.generate import generate_parts_lst
 
 
 @pytest.mark.parametrize('mode',['description'])

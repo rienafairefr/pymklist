@@ -37,7 +37,7 @@ setup(
     description="LDraw mklist in Python",
     entry_points={
         'console_scripts': [
-            'make-list=mklist.cli:main',
+            'mklist=mklist.cli:main',
         ],
     },
     install_requires=requirements,

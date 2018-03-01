@@ -9,14 +9,14 @@ import re
 
 from six.moves import input as six_input
 
-from mklist.download_data import dowload_data
-from mklist.generate_parts_lst import generate_parts_lst
+from mklist.download import dowload_data
+from mklist.generate import generate_parts_lst
 
 ldraw = re.compile(r'ldraw', flags=re.IGNORECASE)
 yes = re.compile(r'[y](?:es)?', flags=re.IGNORECASE)
 
 
-@click.command(name='make-list')
+@click.command(name='mklist')
 @click.argument('input_directory', required=False)
 @click.option('--description', default=False, is_flag=True)
 @click.option('--number', default=False, is_flag=True)
@@ -28,7 +28,7 @@ def main(input_directory, description, number, ):
             print('operating from a LDraw folder, continuing...')
         elif not re.match(ldraw, input_directory):
             print('LDraw parts directory not found')
-            print('Please specify the LDraw parts library directory location in the arguments of the make-list call')
+            print('Please specify the LDraw parts library directory location in the arguments of the mklist call')
             raise click.Abort()
         else:
             print('LDraw parts directory not found')
