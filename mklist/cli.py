@@ -43,7 +43,7 @@ def main(input_directory, description, number, ):
     parts_folder_path = os.path.join(input_directory, 'parts')
     if description:
         generate_parts_lst('description', parts_folder_path, parts_lst_path)
-    else:
+    if number:
         generate_parts_lst('number', parts_folder_path, parts_lst_path)
 
 

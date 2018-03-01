@@ -66,7 +66,14 @@ def test_cli_in_valid_ldraw_dir(glob_mock, generate_parts_lst_mock, cwd_mock, ex
 
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
+    assert not generate_parts_lst_mock.called
 
+    result = runner.invoke(cli.main, ['--description'])
+    assert result.exit_code == 0
+    assert generate_parts_lst_mock.called
+
+    result = runner.invoke(cli.main, ['--number'] )
+    assert result.exit_code == 0
     assert generate_parts_lst_mock.called
 
 
