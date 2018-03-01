@@ -1,10 +1,11 @@
 import glob
 import os
+import io
 import shutil
 
 import re
 
-FORMAT_STRING = '{filename:<30} {description}'
+FORMAT_STRING = u'{filename:<30} {description}'
 alphanum = re.compile('[\W_]+', re.UNICODE)
 num = re.compile('\D', re.UNICODE)
 
@@ -33,7 +34,7 @@ def get_parts_lst(parts_dir, mode):
     for part in parts:
         filename = os.path.basename(part)
         number, _ = os.path.splitext(filename)
-        with open(part, 'r') as part_file:
+        with io.open(part, 'r', newline='\r\n', encoding='utf-8') as part_file:
             header = part_file.readline()
             header_description = header[2:]
             if '~Moved' in header:
@@ -63,4 +64,5 @@ def generate_parts_lst(mode, parts_folder_path, parts_lst_path):
 
     parts_lst = get_parts_lst(parts_folder_path, mode)
 
-    open(parts_lst_path, 'w').writelines(line_format(**row) for row in parts_lst)
+    lines = [line_format(**row) for row in parts_lst]
+    io.open(parts_lst_path, 'w', encoding='utf-8').writelines(lines)

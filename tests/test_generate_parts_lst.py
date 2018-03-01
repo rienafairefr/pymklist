@@ -12,7 +12,7 @@ from mklist.generate_parts_lst import generate_parts_lst
 @pytest.mark.parametrize('mode',['description'])
 def test_generate_test_data(mode):
     _, parts_file = tempfile.mkstemp(suffix='.lst')
-    generate_parts_lst('test_data', mode,
+    generate_parts_lst(mode,
                        parts_folder_path=os.path.join('tests', 'test_data', 'test_parts'),
                        parts_lst_path=parts_file
                        )
