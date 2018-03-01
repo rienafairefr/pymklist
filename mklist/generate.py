@@ -39,7 +39,9 @@ def get_parts_lst(parts_dir, mode):
             header_description = header[2:]
             if '~Moved' in header:
                 continue
-            row = {'filename': filename, 'number': number, 'description': header_description}
+            row = {'filename': filename,
+                   'number': number,
+                   'description': header_description}
 
             if '_' in header_description:
                 parts_dict['_'].append(row)

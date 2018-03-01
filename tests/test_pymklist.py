@@ -54,7 +54,8 @@ def glob_side_effect(*args, **kwargs):
 
 @mock.patch('mklist.cli.generate_parts_lst')
 @mock.patch('glob.glob', side_effect=glob_side_effect)
-def test_cli_in_valid_ldraw_dir(glob_mock, generate_parts_lst_mock, cwd_mock, exists_mock, runner):
+def test_cli_in_valid_ldraw_dir(glob_mock, generate_parts_lst_mock,
+                                cwd_mock, exists_mock, runner):
     cwd_mock.side_effect = lambda: 'ldraw'
 
     def exists_mock_side_effect(s):
@@ -72,12 +73,15 @@ def test_cli_in_valid_ldraw_dir(glob_mock, generate_parts_lst_mock, cwd_mock, ex
     assert result.exit_code == 0
     assert generate_parts_lst_mock.called
 
-    result = runner.invoke(cli.main, ['--number'] )
+    result = runner.invoke(cli.main, ['--number'])
     assert result.exit_code == 0
     assert generate_parts_lst_mock.called
 
 
-def test_cli_in_ldraw_dir_without_parts_dir_no(input_mock, cwd_mock, exists_mock, runner):
+def test_cli_in_ldraw_dir_without_parts_dir_no(input_mock,
+                                               cwd_mock,
+                                               exists_mock,
+                                               runner):
     cwd_mock.side_effect = lambda: 'ldraw'
     exists_mock.side_effect = lambda s: False
     input_mock.side_effect = lambda t: 'n'
@@ -93,8 +97,13 @@ def mocked_retrieve(*args, **kwargs):
 @mock.patch('mklist.cli.generate_parts_lst')
 @mock.patch('mklist.download.urlretrieve')
 @mock.patch('zipfile.ZipFile', spec=zipfile.ZipFile)
-def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock, retrieve_mock, generate_parts_lst_mock,
-                                                input_mock, cwd_mock, exists_mock, runner):
+def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock,
+                                                retrieve_mock,
+                                                generate_parts_lst_mock,
+                                                input_mock,
+                                                cwd_mock,
+                                                exists_mock,
+                                                runner):
     cwd_mock.side_effect = lambda: 'ldraw'
     retrieve_mock.side_effect = mocked_retrieve
 

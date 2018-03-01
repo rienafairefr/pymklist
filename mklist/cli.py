@@ -28,11 +28,13 @@ def main(input_directory, description, number, ):
             print('operating from a LDraw folder, continuing...')
         elif not re.match(ldraw, input_directory):
             print('LDraw parts directory not found')
-            print('Please specify the LDraw parts library directory location in the arguments of the mklist call')
+            print('Please specify the LDraw parts library directory'
+                  'location in the arguments of the mklist call')
             raise click.Abort()
         else:
             print('LDraw parts directory not found')
-            answer = six_input('Do you want it downloaded to a ldraw directory in %s?' % input_directory)
+            answer = six_input('Do you want it downloaded'
+                               'to a ldraw directory in %s?' % input_directory)
             if re.match(yes, answer):
                 dowload_data(input_directory)
             else:
