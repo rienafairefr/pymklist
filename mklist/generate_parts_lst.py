@@ -3,26 +3,36 @@ import os
 import shutil
 
 import re
-import string
 
-from mklist.utils import preserve_cwd
+FORMAT_STRING = '{filename:<30} {description}'
+alphanum = re.compile('[\W_]+', re.UNICODE)
+num = re.compile('\D', re.UNICODE)
 
 
-@preserve_cwd
-def generate_parts_lst(input_directory, mode):
-    os.chdir(input_directory)
-    if os.path.exists('parts.lst'):
-        shutil.move('parts.lst', 'parts.lst.old')
+def line_format(**kwargs):
+    return FORMAT_STRING.format(**kwargs)
 
-    parts = glob.glob(os.path.join('parts', '*.dat'))
 
-    parts_dict = {'_':[], '~':[]}
+def do_sort(li, mode):
+    if mode=='description':
+        def cmpkey1(row):
+            return alphanum.sub('', row[mode]).lower()
+    else:
+        def cmpkey1(row):
+            return num.sub('', row[mode]).lower()
+
+    def cmpkey2(row):
+        return line_format(**row)
+
+    li.sort(key=cmpkey2)
+    li.sort(key=cmpkey1)
+
+
+def get_parts_lst(parts_dir, mode):
+    parts = glob.glob(os.path.join(parts_dir, '*.dat'))
+
+    parts_dict = {'_': [], '~': []}
     parts_lst = []
-
-    format_string = '{filename:<30} {description}'
-
-    def line_format(**kwargs):
-        return format_string.format(**kwargs)
 
     for part in parts:
         filename = os.path.basename(part)
@@ -41,27 +51,24 @@ def generate_parts_lst(input_directory, mode):
             else:
                 parts_lst.append(row)
 
-    alphanum = re.compile('[\W_]+', re.UNICODE)
-
-    def cmpkey1(row):
-        return alphanum.sub('', row[mode]).lower()
-
-    def cmpkey2(row):
-        return line_format(**row)
-
-    def do_sort(li):
-        li.sort(key=cmpkey2)
-        li.sort(key=cmpkey1)
-
-
-    part1 = parts_lst[2573]
-    part2 = parts_lst[674]
-
-    do_sort(parts_lst)
-    do_sort(parts_dict['_'])
-    do_sort(parts_dict['~'])
+    do_sort(parts_lst, mode)
+    do_sort(parts_dict['_'], mode)
+    do_sort(parts_dict['~'], mode)
 
     parts_lst.extend(parts_dict['_'])
     parts_lst.extend(parts_dict['~'])
 
-    open('parts.lst', 'w').writelines(line_format(**row) for row in parts_lst)
+    return parts_lst
+
+
+def generate_parts_lst(input_directory, mode, parts_folder_path='parts', parts_lst_path=None):
+    if parts_lst_path is None:
+        parts_lst_path = os.path.join(input_directory, 'parts.lst')
+    if parts_folder_path is None:
+        parts_folder_path = os.path.join(input_directory, 'parts')
+    if os.path.exists(parts_lst_path):
+        shutil.move(parts_lst_path, parts_lst_path+'.old')
+
+    parts_lst = get_parts_lst(parts_folder_path, mode)
+
+    open(parts_lst_path, 'w').writelines(line_format(**row) for row in parts_lst)
