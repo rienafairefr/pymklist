@@ -15,20 +15,20 @@ pymklist
 
 LDraw mklist in Python
 
-Once installed with `pip install pymklist`, it should be an almost drop-in replacement for the make-list bash file found in
-`https://github.com/nathaneltitane/ldraw` or the Windows executable mklist.exe found in LDraw.org complete.zip
-you can start it by just doing `mklist` on the command-line.
+Once installed with ``pip install pymklist``, it should be an almost drop-in replacement for the make-list bash file found in
+``https://github.com/nathaneltitane/ldraw`` or the Windows executable mklist.exe found in LDraw.org complete.zip
+you can start it by just doing ``mklist`` on the command-line.
 
-You can instruct mklist to generate the parts.lst with a sort on the description (`--description`) or the code (`--number`),
-use `mklist --help` for usage description
+You can instruct mklist to generate the parts.lst with a sort on the description (``--description``) or the code (``--number``),
+use ``mklist --help`` for usage description
 
 pymklist has been tested on Python 2.7, 3.4, 3.5 and 3.6
 
 You can also get the parts list from Python code, just do
 
-`from mklist.generate import get_parts_lst` and call the `get_parts_lst` function to get a list
+``from mklist.generate import get_parts_lst`` and call the ``get_parts_lst`` function to get a list
 
-or `from mklist.generate import generate_parts_lst` to generate a parts.lst
+or ``from mklist.generate import generate_parts_lst`` to generate a parts.lst
 
 
 * Free software: GNU General Public License v3
