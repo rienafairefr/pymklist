@@ -5,8 +5,6 @@
 
 from setuptools import setup, find_packages
 
-import os
-
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
@@ -52,6 +50,7 @@ setup(
     use_scm_version=True,
     test_suite='tests',
     tests_require=test_requirements,
+    version="1.0.0",
     url='https://github.com/rienafairefr/pymklist',
     zip_safe=False,
 )

@@ -5,9 +5,9 @@ import shutil
 
 import re
 
-FORMAT_STRING = u'{filename:<30} {description}'
-alphanum = re.compile('[\W_]+', re.UNICODE)
-num = re.compile('\D', re.UNICODE)
+FORMAT_STRING = '{filename:<30} {description}'
+alphanum = re.compile(r"[\W_]+", re.UNICODE)
+num = re.compile(r"\D", re.UNICODE)
 
 
 def line_format(**kwargs):
