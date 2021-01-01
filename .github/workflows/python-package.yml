@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
     - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
@@ -39,11 +41,7 @@ jobs:
         pip install -r requirements_dev.txt
     - name: Build a binary wheel and a source tarball
       run: >-
-        python -m
-        build
-        --sdist
-        --wheel
-        --outdir dist/
+        python setup.py sdist bdist_wheel
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:

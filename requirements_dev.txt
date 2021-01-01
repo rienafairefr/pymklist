@@ -9,6 +9,4 @@ pytest-cov
 attrs==19.1.0
 mock
 setuptools_scm
-build
 coveralls
-
