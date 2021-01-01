@@ -13,8 +13,6 @@ from mklist import cli
 
 import mock
 
-from mklist.download import LDRAW_URL
-
 
 @pytest.fixture
 def runner():
@@ -30,12 +28,6 @@ def cwd_mock():
 @pytest.fixture
 def exists_mock():
     with mock.patch('os.path.exists') as ctx:
-        yield ctx
-
-
-@pytest.fixture
-def input_mock():
-    with mock.patch('mklist.cli.six_input') as ctx:
         yield ctx
 
 
@@ -78,13 +70,11 @@ def test_cli_in_valid_ldraw_dir(glob_mock, generate_parts_lst_mock,
     assert generate_parts_lst_mock.called
 
 
-def test_cli_in_ldraw_dir_without_parts_dir_no(input_mock,
-                                               cwd_mock,
+def test_cli_in_ldraw_dir_without_parts_dir_no(cwd_mock,
                                                exists_mock,
                                                runner):
     cwd_mock.side_effect = lambda: 'ldraw'
     exists_mock.side_effect = lambda s: False
-    input_mock.side_effect = lambda t: 'n'
 
     result = runner.invoke(cli.main)
     assert result.exit_code == 1
@@ -92,37 +82,6 @@ def test_cli_in_ldraw_dir_without_parts_dir_no(input_mock,
 
 def mocked_retrieve(*args, **kwargs):
     return os.path.join('tests', 'test_data', 'complete.zip'), ''
-
-
-@mock.patch('mklist.cli.generate_parts_lst')
-@mock.patch('mklist.download.urlretrieve')
-@mock.patch('zipfile.ZipFile', spec=zipfile.ZipFile)
-def test_cli_in_ldraw_dir_without_parts_dir_yes(zip_mock,
-                                                retrieve_mock,
-                                                generate_parts_lst_mock,
-                                                input_mock,
-                                                cwd_mock,
-                                                exists_mock,
-                                                runner):
-    cwd_mock.side_effect = lambda: 'ldraw'
-    retrieve_mock.side_effect = mocked_retrieve
-
-    def exists(s):
-        if s.endswith('.zip'):
-            return False
-        return False
-
-    exists_mock.side_effect = exists
-    input_mock.side_effect = lambda t: 'y'
-
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-
-    assert retrieve_mock.called
-
-    assert retrieve_mock.call_args[0][0] == LDRAW_URL
-
-    assert zip_mock.called
 
 
 def test_cli_has_help(runner):

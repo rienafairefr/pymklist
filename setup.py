@@ -5,8 +5,6 @@
 
 from setuptools import setup, find_packages
 
-import os
-
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
@@ -15,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=6.0', ]
 
-setup_requirements = ['pytest-runner', 'six']
+setup_requirements = ['pytest-runner', 'six', 'setuptools_scm']
 
 test_requirements = ['pytest', ]
 
@@ -27,12 +25,13 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
     description="LDraw mklist in Python",
     entry_points={
@@ -48,9 +47,10 @@ setup(
     name='pymklist',
     packages=find_packages(include=['mklist']),
     setup_requires=setup_requirements,
+    use_scm_version=True,
     test_suite='tests',
     tests_require=test_requirements,
+    version="1.0.0",
     url='https://github.com/rienafairefr/pymklist',
-    version=os.environ.get('TAG_NAME', os.environ.get('TRAVIS_TAG', 'dev')),
     zip_safe=False,
 )
