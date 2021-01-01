@@ -45,18 +45,12 @@ jobs:
         --wheel
         --outdir dist/
     - name: Publish distribution 📦 to Test PyPI
-      uses: mariamrf/py-package-publish-action@v1.0.0
+      uses: pypa/gh-action-pypi-publish@master
       with:
-        python_version: '3.6.0'
-      env:
-        TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
-        TWINE_PASSWORD: __token__
-        TWINE_USERNAME: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
     - name: Publish distribution 📦 to PyPI
       if: startsWith(github.ref, 'refs/tags')
-      uses: mariamrf/py-package-publish-action@v1.0.0
+      uses: pypa/gh-action-pypi-publish@master
       with:
-        python_version: '3.6.0'
-      env:
-        TWINE_PASSWORD: __token__
-        TWINE_USERNAME: ${{ secrets.PYPI_API_TOKEN }}
+        password: ${{ secrets.PYPI_API_TOKEN }}

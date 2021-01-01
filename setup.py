@@ -53,6 +53,5 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rienafairefr/pymklist',
-    version=os.environ.get('TAG_NAME', os.environ.get('TRAVIS_TAG', 'dev')),
     zip_safe=False,
 )
