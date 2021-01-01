@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=6.0', ]
 
-setup_requirements = ['pytest-runner', 'six', 'wheel', 'setuptools_scm']
+setup_requirements = ['pytest-runner', 'six', 'setuptools_scm']
 
 test_requirements = ['pytest', ]
 

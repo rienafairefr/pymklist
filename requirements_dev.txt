@@ -10,3 +10,4 @@ attrs==19.1.0
 mock
 setuptools_scm
 coveralls
+wheel
