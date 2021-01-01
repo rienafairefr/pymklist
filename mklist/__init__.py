@@ -3,5 +3,4 @@
 """Top-level package for pymklist."""
 
 __author__ = """Matthieu Berthomé"""
-__email__ = 'rienafairefr@gmail.com'
-__version__ = '0.1.0'
+__email__ = 'matthieu@mmea.fr'

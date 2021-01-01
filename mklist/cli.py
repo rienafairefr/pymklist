@@ -7,9 +7,6 @@ import os
 
 import re
 
-from six.moves import input as six_input
-
-from mklist.download import dowload_data
 from mklist.generate import generate_parts_lst
 
 ldraw = re.compile(r'ldraw', flags=re.IGNORECASE)
@@ -24,22 +21,17 @@ def main(input_directory, description, number, ):
     """Console script for pymklist."""
     if input_directory is None:
         input_directory = os.getcwd()
-        if re.match(ldraw, input_directory) and os.path.exists('parts'):
-            print('operating from a LDraw folder, continuing...')
-        elif not re.match(ldraw, input_directory):
-            print('LDraw parts directory not found')
-            print('Please specify the LDraw parts library directory'
-                  'location in the arguments of the mklist call')
-            raise click.Abort()
-        else:
-            print('LDraw parts directory not found')
-            answer = six_input('Do you want it downloaded'
-                               'to a ldraw directory in %s?' % input_directory)
-            if re.match(yes, answer):
-                dowload_data(input_directory)
-            else:
-                print('Can\'t continue without a LDraw parts directory')
-                raise click.Abort()
+    if re.match(ldraw, input_directory) and os.path.exists('parts'):
+        print('operating from a LDraw folder, continuing...')
+    elif not (
+        re.match(ldraw, input_directory)
+        and
+        os.path.exists(os.path.join(input_directory, 'parts'))
+    ):
+        print('LDraw parts directory not found')
+        print('Please specify a LDraw parts library directory'
+              'location in the arguments of the mklist call')
+        raise click.Abort()
 
     parts_lst_path = os.path.join(input_directory, 'parts.lst')
     parts_folder_path = os.path.join(input_directory, 'parts')
