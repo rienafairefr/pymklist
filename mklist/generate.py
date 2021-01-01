@@ -34,21 +34,25 @@ def get_parts_lst(parts_dir, mode):
     for part in parts:
         filename = os.path.basename(part)
         number, _ = os.path.splitext(filename)
-        with io.open(part, 'r', newline='\r\n', encoding='utf-8') as part_file:
-            header = part_file.readline()
-            header_description = header[2:]
-            if '~Moved' in header:
-                continue
-            row = {'filename': filename,
-                   'number': number,
-                   'description': header_description}
+        try:
+            with io.open(part, 'r', newline='\r\n', encoding='utf-8') as part_file:
+                header = part_file.readline()
+                header_description = header[2:]
+                if '~Moved' in header:
+                    continue
+                row = {'filename': filename,
+                       'number': number,
+                       'description': header_description}
 
-            if '_' in header_description:
-                parts_dict['_'].append(row)
-            elif '~' in header_description:
-                parts_dict['~'].append(row)
-            else:
-                parts_lst.append(row)
+                if '_' in header_description:
+                    parts_dict['_'].append(row)
+                elif '~' in header_description:
+                    parts_dict['~'].append(row)
+                else:
+                    parts_lst.append(row)
+        except UnicodeDecodeError:
+            # ignore non-utf-8 files
+            continue
 
     do_sort(parts_lst, mode)
     do_sort(parts_dict['_'], mode)
