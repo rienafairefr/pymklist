@@ -71,4 +71,4 @@ def generate_parts_lst(mode, parts_folder_path, parts_lst_path):
     parts_lst = get_parts_lst(parts_folder_path, mode)
 
     lines = [line_format(**row) for row in parts_lst]
-    io.open(parts_lst_path, 'w', encoding='utf-8').writelines(lines)
+    open(parts_lst_path, 'w', newline='\r\n', encoding='utf-8').writelines(lines)
