@@ -35,7 +35,7 @@ def get_parts_lst(parts_dir, mode):
         filename = os.path.basename(part)
         number, _ = os.path.splitext(filename)
         try:
-            with io.open(part, 'r', newline='\r\n', encoding='utf-8') as part_file:
+            with open(part, 'rU', encoding='utf-8') as part_file:
                 header = part_file.readline()
                 header_description = header[2:]
                 if '~Moved' in header:
@@ -71,4 +71,4 @@ def generate_parts_lst(mode, parts_folder_path, parts_lst_path):
     parts_lst = get_parts_lst(parts_folder_path, mode)
 
     lines = [line_format(**row) for row in parts_lst]
-    io.open(parts_lst_path, 'w', encoding='utf-8').writelines(lines)
+    open(parts_lst_path, 'w', newline='\r\n', encoding='utf-8').writelines(lines)
