@@ -35,7 +35,7 @@ def get_parts_lst(parts_dir, mode):
         filename = os.path.basename(part)
         number, _ = os.path.splitext(filename)
         try:
-            with io.open(part, 'r', newline='\r\n', encoding='utf-8') as part_file:
+            with open(part, 'rU', encoding='utf-8') as part_file:
                 header = part_file.readline()
                 header_description = header[2:]
                 if '~Moved' in header:
